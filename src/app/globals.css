@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f1f5f9;
   --foreground: #171717;
 }
 
@@ -14,13 +14,45 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #f1f5f9;
     --foreground: #ededed;
   }
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
-  background: var(--background);
+  background: var(--background) url('/background.svg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Add custom heading styles to the 'components' layer */
+@layer components {
+  /* H2: Speech bubble style with gradient accent */
+  main h2 {
+    @apply relative border-none bg-[#f0f8ff] py-2.5 px-4 text-[#333] text-xl leading-normal mt-8 mb-4;
+  }
+  main h2::before {
+    @apply content-[''] absolute top-0 left-0 w-2 h-full rounded-l-sm;
+    background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  /* H3: Simple style with a left border */
+  main h3 {
+    @apply relative border-none border-l-[6px] border-solid border-[#4facfe] bg-[#f8f9fa] text-lg text-[#333] mt-6 mb-3;
+    padding: 0.4em 1em;
+    line-height: 1.4;
+  }
+
+  /* H4: Even simpler style with a bottom border */
+  main h4 {
+    @apply relative border-none border-b-2 border-solid border-[#4facfe] text-base text-[#333] mt-4 mb-2;
+    padding: 0.3em 0;
+    line-height: 1.4;
+  }
+}
+
