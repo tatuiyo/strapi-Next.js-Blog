@@ -6,6 +6,7 @@
 
 import { getPostBySlug } from "@/lib/api";
 import Image from "next/image";
+import Link from "next/link";
 import { Metadata, ResolvingMetadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -62,7 +63,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     return <div>404 - Blog post not found</div>;
   }
 
-  const { title, content, cover, createdAt } = post;
+  const { title, content, cover, createdAt, categories } = post;
 
   // Format the creation date for display.
   const formattedDate = new Date(createdAt).toLocaleDateString('ja-JP', {
@@ -76,6 +77,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Post Header */}
       <h1 className="text-3xl font-bold mb-2">{title}</h1>
       <p className="text-gray-500 text-sm mb-6">Published on {formattedDate}</p>
+
+      {/* Category Tags */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {categories && categories.map((category: any) => (
+          <Link href={`/category/${category.slug}`} key={category.id} className="bg-sky-100 text-sky-800 text-xs font-medium px-2.5 py-0.5 rounded-full hover:bg-sky-200 transition-colors">
+            {category.name}
+          </Link>
+        ))}
+      </div>
       
       {/* Post Cover Image, displayed if available */}
       {cover?.data?.attributes?.url && (

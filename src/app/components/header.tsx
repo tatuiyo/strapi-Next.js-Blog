@@ -27,7 +27,7 @@ export function Header({ categories }: { categories: any[] }) {
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Site title/logo linking to the homepage. */}
         <Link href="/" className="text-2xl font-bold text-gray-800 hover:text-sky-600 transition-colors">
-          Gemini Blog
+          たついよサイクル
         </Link>
 
         {/* Hamburger Menu button for small screens. */}
