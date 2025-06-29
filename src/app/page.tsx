@@ -41,7 +41,7 @@ export default async function BlogListPage({ searchParams }: BlogListPageProps) 
   return (
     <>
       {/* Container for the list of blog posts. */}
-      <div className="space-y-12">
+      <div className="divide-y divide-gray-200">
         {posts.map((post: any) => {
           const { title, description, slug, cover, categories } = post;
 
@@ -52,7 +52,7 @@ export default async function BlogListPage({ searchParams }: BlogListPageProps) 
           }
 
           return (
-            <div key={post.id} className="group">
+            <div key={post.id} className="group py-12 first:pt-0 last:pb-0">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 {/* Post cover image, linking to the blog post. */}
                 <Link href={`/blog/${slug}`} className="md:col-span-1 aspect-[4/3] overflow-hidden rounded-lg block">
@@ -81,7 +81,7 @@ export default async function BlogListPage({ searchParams }: BlogListPageProps) 
                   </div>
                   {/* Post title, linking to the blog post. */}
                   <Link href={`/blog/${slug}`}>
-                    <h2 className="text-2xl font-bold mb-2 group-hover:text-sky-600 transition-colors">{title}</h2>
+                    <h2 className="text-xl font-bold mb-2 group-hover:text-sky-600 transition-colors md:text-2xl">{title}</h2>
                   </Link>
                   {/* Post description with a line clamp to limit text length. */}
                   <p className="text-gray-600 line-clamp-3">{description}</p>
