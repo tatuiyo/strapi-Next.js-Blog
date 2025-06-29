@@ -6,6 +6,25 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getBlogPosts } from "@/lib/api";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'たついよサイクル',
+  description: '自転車ブログ',
+  openGraph: {
+    title: 'たついよサイクル',
+    description: '自転車ブログ',
+    type: 'website',
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ''}/favicon.ico`, // Path to your site icon
+        width: 32,
+        height: 32,
+        alt: 'My Blog Icon',
+      },
+    ],
+  },
+};
 
 // The base URL for the API, used to construct absolute image URLs.
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;

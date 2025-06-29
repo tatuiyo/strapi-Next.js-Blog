@@ -40,9 +40,46 @@ export async function generateMetadata(
     };
   }
 
+  const strapiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+  // Construct the original image URL from Strapi, if available.
+  const originalImageUrl = post.cover?.url ? new URL(post.cover.url, strapiBaseUrl).toString() : undefined;
+
+  let ogImageOptimizedUrl: string | undefined;
+
+  // If an original image URL exists, generate an optimized URL using Next.js Image Optimization.
+  // This ensures the OGP image is served through Next.js, allowing for local Strapi instances
+  // and leveraging Next.js's image processing capabilities.
+  if (originalImageUrl) {
+    const encodedImageUrl = encodeURIComponent(originalImageUrl);
+    const ogImageWidth = 1200; // Standard width for OGP images
+    const ogImageQuality = 75; // Quality setting for the optimized image
+
+    // Use NEXT_PUBLIC_SITE_URL to ensure the OGP image URL is absolute and points to the deployed site.
+    // This is crucial for social media platforms to correctly fetch the image.
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+    ogImageOptimizedUrl = `${siteUrl}/_next/image?url=${encodedImageUrl}&w=${ogImageWidth}&q=${ogImageQuality}`;
+  }
+
   return {
     title: post.title,
     description: post.description,
+    // Open Graph Protocol (OGP) metadata for social media sharing.
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article', // Indicates the content is an article
+      // Conditionally include images if an optimized OGP image URL is available.
+      ...(ogImageOptimizedUrl && {
+        images: [
+          {
+            url: ogImageOptimizedUrl,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          },
+        ],
+      }),
+    },
   };
 }
 

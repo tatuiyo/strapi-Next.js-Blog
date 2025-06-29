@@ -41,6 +41,7 @@ The project follows a modern, server-centric approach, which is a core tenet of 
     2. `generateMetadata` fetches post data to create dynamic page titles and descriptions for SEO.
     3. The main component fetches the full post content using `getPostBySlug`.
     4. It uses `ReactMarkdown` with `rehype-raw` to render the post's Markdown content, including custom handling for images to use the Next.js `Image` component for optimization.
+    5. **Open Graph Protocol (OGP) Integration**: The `generateMetadata` function is enhanced to include OGP metadata, specifically for images. This ensures that when a blog post is shared on social media, a rich preview with the post's cover image is displayed. The OGP image URL is constructed to leverage Next.js's image optimization capabilities, even for images hosted on a local Strapi instance. This is achieved by encoding the original Strapi image URL and passing it to Next.js's image optimization endpoint (`/_next/image`). The `NEXT_PUBLIC_SITE_URL` environment variable is used to ensure the OGP image URL is absolute and points to the deployed site, which is crucial for social media platforms to correctly fetch the image.
 
 #### `src/app/category/page.tsx`
 - **Purpose**: Displays a list of all available categories.
