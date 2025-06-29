@@ -2,8 +2,8 @@ import qs from "qs";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-async function fetchData(url: URL) {
-  const res = await fetch(url.toString());
+async function fetchData(url: URL, tags: string[] = []) {
+  const res = await fetch(url.toString(), { next: { tags } });
   if (!res.ok) {
     const errorText = await res.text();
     throw new Error(`API error: ${res.status} - ${errorText}`);
@@ -26,7 +26,7 @@ export async function getBlogPosts(page = 1, pageSize = 10) {
   });
   const url = new URL("/api/blogs", baseUrl);
   url.search = query;
-  return await fetchData(url);
+  return await fetchData(url, ['blog_posts']);
 }
 
 export async function getPostBySlug(slug: string) {
@@ -39,13 +39,13 @@ export async function getPostBySlug(slug: string) {
   });
   const url = new URL("/api/blogs", baseUrl);
   url.search = query;
-  const data = await fetchData(url);
+  const data = await fetchData(url, ['blog_posts', `blog_post:${slug}`]);
   return data.data[0] ?? null;
 }
 
 export async function getCategories() {
   const url = new URL("/api/categories", baseUrl);
-  const data = await fetchData(url);
+  const data = await fetchData(url, ['categories']);
   return data.data;
 }
 
@@ -68,5 +68,5 @@ export async function getPostsByCategory(categorySlug: string, page = 1, pageSiz
   });
   const url = new URL("/api/blogs", baseUrl);
   url.search = query;
-  return await fetchData(url);
+  return await fetchData(url, ['blog_posts', `category:${categorySlug}`]);
 }

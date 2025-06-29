@@ -55,6 +55,15 @@ The project follows a modern, server-centric approach, which is a core tenet of 
     2. Fetches posts for the given category using `getPostsByCategory`.
     3. Renders the list of posts and includes pagination controls.
 
+#### `src/app/api/revalidate/route.ts` (New)
+- **Purpose**: Implements On-demand Revalidation to reflect content changes from the headless CMS (Strapi) without requiring a full site rebuild.
+- **Functionality**:
+    1. Provides a secure webhook endpoint (`/api/revalidate`) for Strapi to call upon content updates.
+    2. Authenticates requests using a secret token (`STRAPI_REVALIDATE_TOKEN`) to ensure they originate from Strapi.
+    3. Parses the webhook payload to identify which content model (`blog`, `category`) and specific entry was updated.
+    4. Uses Next.js's `revalidateTag` function to purge the cache for relevant pages. This includes list pages (e.g., all blog posts) and specific detail pages (e.g., the updated blog post).
+    5. This allows for near-instantaneous content updates on the live site, significantly improving editorial workflow.
+
 ### `src/app/components/` (Reusable UI Components)
 - **`header.tsx`**:
     - This file now exclusively defines the `Header` Client Component.
