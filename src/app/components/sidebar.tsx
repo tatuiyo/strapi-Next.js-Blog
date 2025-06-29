@@ -91,6 +91,24 @@ export default async function Sidebar() {
           </Link>
         </div>
       )}
+
+      {/* Section for Recommended Blog */}
+      <div className="mt-8 p-6 bg-sky-50 rounded-xl border border-sky-200">
+        <h2 className="text-xl font-bold mb-4 text-sky-800">おすすめブログ</h2>
+        <Link href="https://tatuiyo.xyz" target="_blank" rel="noopener noreferrer" className="block no-underline">
+          <div className="flex items-center mb-3">
+            <Image
+              src="/favicon.ico" // Placeholder image
+              alt="たつろぐ"
+              width={48}
+              height={48}
+              className="rounded-full mr-3"
+            />
+            <h3 className="text-lg font-semibold text-sky-700 hover:text-sky-900 transition-colors">たつろぐ</h3>
+          </div>
+          <p className="text-sm text-sky-600">自宅鯖　技術系ブログ</p>
+        </Link>
+      </div>
     </aside>
   );
 }
