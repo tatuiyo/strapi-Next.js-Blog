@@ -1,8 +1,8 @@
 /**
  * @file src/app/components/header.tsx
- * @description This file defines the header for the application.
- * It demonstrates a powerful Next.js pattern: a Server Component (`HeaderData`)
- * fetching data and passing it to a Client Component (`Header`) that handles interactivity.
+ * @description This file defines the client-side interactive part of the application header.
+ * It is a Client Component responsible for handling user interactions like the mobile menu toggle.
+ * Data fetching is handled by the `HeaderData` Server Component, which passes data via props.
  */
 
 'use client';
@@ -13,6 +13,7 @@ import { useState } from 'react';
 /**
  * The interactive part of the header.
  * This is a Client Component responsible for the UI and state management (e.g., mobile menu).
+ * It receives categories as props from a Server Component.
  *
  * @param {{ categories: any[] }} props The props for the component.
  * @param {any[]} props.categories The list of categories to display in the navigation.
@@ -78,18 +79,5 @@ export function Header({ categories }: { categories: any[] }) {
   );
 }
 
-// This is the server component part that fetches data.
-import { getCategories } from "@/lib/api";
 
-/**
- * A Server Component responsible for fetching the category data.
- * It then renders the `Header` (Client Component), passing the fetched data as props.
- * This pattern is excellent for performance as data fetching remains on the server.
- *
- * @returns {Promise<JSX.Element>} A promise that resolves to the rendered Header component with category data.
- */
-export default async function HeaderData() {
-  const categories = await getCategories();
-  return <Header categories={categories} />;
-}
 

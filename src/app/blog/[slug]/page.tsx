@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from 'next';
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
+
 
 /**
  * Type definition for the props received by the BlogPostPage component.
@@ -139,7 +139,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <article className="prose">
         <ReactMarkdown
           // Use rehype-raw to safely render HTML tags (like <br>) within the Markdown.
-          rehypePlugins={[rehypeRaw]}
           components={{
             // Custom renderer for images to use the Next.js Image component.
             // This provides automatic image optimization.

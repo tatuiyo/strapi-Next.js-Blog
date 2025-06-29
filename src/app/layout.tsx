@@ -10,7 +10,7 @@ import "./globals.css";
 
 // Component imports for the main layout structure
 import Footer from "@/app/components/footer";
-import HeaderData from "@/app/components/header";
+import HeaderData from "@/app/components/header-data";
 import Sidebar from "@/app/components/sidebar";
 
 // Font imports from Geist, a modern font family.

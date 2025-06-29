@@ -33,6 +33,7 @@ The project follows a modern, server-centric approach, which is a core tenet of 
 - **`layout.tsx`**: The root layout for the entire application. It defines the main HTML structure, including the `Header`, `Sidebar`, and `Footer`, and wraps the main content area.
 - **`page.tsx`**: The homepage of the blog, which displays a paginated list of all blog posts.
 - **`globals.css`**: Global stylesheet, including Tailwind CSS setup, custom font definitions, and custom styles for HTML elements like headings.
+- **`sitemap.ts`**: This file generates the XML sitemap for the Next.js application. It includes static pages, dynamic blog posts, and dynamic category pages. The sitemap is automatically exposed at `/sitemap.xml` by Next.js App Router, aiding in SEO by providing search engines with a structured list of all public URLs.
 
 #### `src/app/blog/[slug]/page.tsx`
 - **Purpose**: Renders a single blog post.
@@ -56,10 +57,14 @@ The project follows a modern, server-centric approach, which is a core tenet of 
 
 ### `src/app/components/` (Reusable UI Components)
 - **`header.tsx`**:
-    - Contains two components: `HeaderData` (Server Component) and `Header` (Client Component).
-    - `HeaderData` fetches the category list on the server.
-    - `Header` receives the categories as props and handles the UI, including the client-side logic for the mobile navigation menu.
-- **`sidebar.tsx`**: A Server Component that fetches and displays a list of recent posts and all categories.
+    - This file now exclusively defines the `Header` Client Component.
+    - It is responsible for the interactive aspects of the header, such as the mobile menu toggle.
+    - It receives category data as `props` from a Server Component, ensuring that data fetching does not occur on the client side.
+- **`header-data.tsx` (New)**:
+    - This is a dedicated Server Component (`HeaderData`) responsible for fetching the category list.
+    - It imports `Header` (the Client Component) and passes the fetched data to it as props.
+    - **Problem & Solution**: Initially, `HeaderData` was defined within `header.tsx` which had a `'use client'` directive at the top. This inadvertently caused `HeaderData` to be bundled and executed as a Client Component, leading to client-side API calls (e.g., to `http://192.168.100.19:1337/api/categories`). When the main site was accessed via HTTPS, these HTTP API calls resulted in Mixed Content errors and failed due to the private IP address. By separating `HeaderData` into its own file (`header-data.tsx`) without the `'use client'` directive, it now correctly functions as a Server Component, fetching data on the server and resolving the Mixed Content and accessibility issues for the header's dynamic elements. This highlights the critical importance of `'use client'` placement in Next.js App Router applications.
+- **`sidebar.tsx`**: A Server Component that fetches and displays a list of recent posts and all categories. It has been enhanced to include a "Featured Post" section, allowing a specific blog post (identified by its slug) to be prominently displayed with its thumbnail and title. This section is positioned at the bottom of the sidebar.
 - **`footer.tsx`**: A simple static footer component.
 
 ### `src/lib/` (Core Logic)
