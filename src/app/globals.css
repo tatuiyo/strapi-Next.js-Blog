@@ -54,5 +54,10 @@ body {
     padding: 0.3em 0;
     line-height: 1.4;
   }
+
+  /* Custom style for links within prose */
+  .prose a {
+    @apply text-sky-600 hover:underline;
+  }
 }
 
